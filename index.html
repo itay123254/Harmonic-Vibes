@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmonic Vibes - קריוקי</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url('https://www.offidocs.com/images/darktexturebackgroundblack.jpg') no-repeat center center/cover;
+      background-size: cover;
+      color: white;
+      direction: rtl;
+      text-align: right;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px 30px;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 4em;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.5em;
+      max-width: 600px;
+    }
+
+    .btn {
+      background-color: #e74c3c;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      text-decoration: none;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      background-color: #c0392b;
+    }
+
+    .karaoke-container {
+      margin-top: 50px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .karaoke-container h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .karaoke-input {
+      width: 60%;
+      padding: 15px;
+      font-size: 18px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .karaoke-button {
+      background-color: #e74c3c;
+      color: white;
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .karaoke-button:hover {
+      background-color: #c0392b;
+    }
+
+    .lyrics-container {
+      margin-top: 30px;
+      padding: 20px;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 5px;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .lyrics-container .current-line {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .content-section {
+      padding: 50px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .content-section h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .content-section p {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">בית</a>
+    <a href="faq.html">שאלות ותשובות</a>
+    <a href="tips.html">טיפים</a>
+    <a href="examples.html">דוגמאות</a>
+    <a href="prices.html">מחירים</a>
+    <a href="blog.html">בלוג</a>
+    <a href="contact.html">צור קשר</a>
+    <a href="privacy-policy.html">מדיניות פרטיות</a> <!-- הקישור הזה מוביל לדף המדיניות פרטיות -->
+  </nav>
+
+  <section class="hero">
+    <h1>Harmonic Vibes - קריוקי</h1>
+    <p>הוסף שיר ותגלה את חווית הקריוקי עם מילים שמתעדכנות בזמן אמת.</p>
+  </section>
+
+  <section class="karaoke-container">
+    <h2>הפוך את השיר לקריוקי</h2>
+
+    <input type="text" class="karaoke-input" id="songUrl" placeholder="הכנס לינק ליוטיוב או בחר קובץ MP3">
+    <br>
+    <input type="file" id="fileInput" class="karaoke-input" accept=".mp3">
+    <br>
+    <button class="karaoke-button" onclick="playKaraoke()">הפעל שיר</button>
+
+    <div id="karaokePlayer"></div>
+    <div class="lyrics-container" id="lyricsContainer"></div>
+  </section>
+
+  <section id="faq" class="content-section">
+    <h2>שאלות ותשובות</h2>
+    <p><strong>שאלה:</strong> איך אני יכול להוסיף שיר לקריוקי?</p>
+    <p><strong>תשובה:</strong> פשוט הכנס את לינק ה-YouTube של השיר או בחר קובץ MP3 מתוך המחשב שלך, ולחץ על "הפעל שיר".</p>
+
+    <p><strong>שאלה:</strong> מה קורה אם אני לא מוצא את המילים של השיר?</p>
+    <p><strong>תשובה:</strong> אם השיר שלך אינו כולל מילים, תוכל להוסיף קובץ LRC עם המילים או להשתמש בשירותים אחרים לאיתור מילים.</p>
+  </section>
+
+  <section id="tips" class="content-section">
+    <h2>טיפים</h2>
+    <p>כדי לשדרג את חווית הקריוקי, נסה לבחור שירים עם מילים ברורות שיתאימו להציג בזמן אמת.</p>
+    <p>אם אתה מעוניין ליצור קריוקי לשיר שאין לו מילים, השתמש בקובץ LRC עם המילים המתואמות לזמן השיר.</p>
+  </section>
+
+  <script>
+    let lyrics = []; // will hold the lyrics from the LRC file
+    let currentLine = 0; // track the current line in the lyrics
+
+    // Function to display lyrics in sync with the song
+    function updateLyrics(currentTime) {
+      const lyricContainer = document.getElementById('lyricsContainer');
+      if (currentLine < lyrics.length && currentTime >= lyrics[currentLine].time) {
+        const lineElement = document.createElement('div');
+        lineElement.textContent = lyrics[currentLine].text;
+        lineElement.classList.add('current-line');
+        lyricContainer.innerHTML = ''; // clear previous lyrics
+        lyricContainer.appendChild(lineElement);
+        currentLine++;
+      }
+    }
+
+    // Play the karaoke (MP3 or YouTube)
+    function playKaraoke() {
+      var songUrl = document.getElementById("songUrl").value;
+      var fileInput = document.getElementById("fileInput");
+      var playerContainer = document.getElementById("karaokePlayer");
+
+      if (songUrl) {
+        // Handle YouTube URL
+        var youtubeId = extractYouTubeId(songUrl);
+        if (youtubeId) {
+          playerContainer.innerHTML = '<iframe width="100%" height="380" src="https://www.youtube.com/embed/' + youtubeId + '?autoplay=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+          loadLyrics('path/to/lyrics/lrc'); // Specify the path to the LRC file
+        } else {
+          playerContainer.innerHTML = "<p>לא ניתן לחלץ ID משם ה-URL שהוזן. נסה URL יוטיוב אחר.</p>";
+        }
+      } else if (fileInput.files.length > 0) {
+        // If MP3 file is selected
+        var file = fileInput.files[0];
+        var fileUrl = URL.createObjectURL(file);
+        playerContainer.innerHTML = '<audio controls autoplay id="audioPlayer"><source src="' + fileUrl + '" type="audio/mp3">הדפדפן שלך לא תומך בנגן אודיו.</audio>';
+        document.getElementById('audioPlayer').addEventListener('timeupdate', function() {
+          updateLyrics(this.currentTime); // Update lyrics while the audio is playing
+        });
+      } else {
+        playerContainer.innerHTML = "<p>אנא הזן URL תקין של שיר או בחר קובץ MP3.</p>";
+      }
+    }
+
+    // Function to extract the YouTube ID from the URL
+    function extractYouTubeId(url) {
+      var regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      var matches = url.match(regex);
+      return (matches && matches[1]) ? matches[1] : null;
+    }
+
+    // Load lyrics from the LRC file
+    function loadLyrics(filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+          parseLyrics(data);
+        });
+    }
+
+    // Parse LRC file content and store it in 'lyrics' array
+    function parseLyrics(data) {
+      const lines = data.split('\n');
+      lyrics = lines.map(line => {
+        const parts = line.split(']');
+        if (parts.length > 1) {
+          const timeParts = parts[0].slice(1).split(':');
+          const time = parseFloat(timeParts[0]) * 60 + parseFloat(timeParts[1]);
+          const text = parts[1];
+          return { time, text };
+        }
+      }).filter(Boolean);
+    }
+  </script>
+</body>
+</html>
